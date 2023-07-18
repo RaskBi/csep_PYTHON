@@ -1,0 +1,21 @@
+
+table {
+    border-collapse: collapse;
+    font-size: 12px;
+    table-layout: fixed;
+}
+table td:nth-child(1) {
+    font-size: 13px; /* Cambia el tamaño de letra según tus necesidades */
+}
+table, th, td {
+    border: 1px solid #b4b4b4;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+tr:nth-child(even) {background-color: #f2f2f2}
+th {
+    background-color: #003e69;
+    color: white;
+}

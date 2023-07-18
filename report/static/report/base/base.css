@@ -1,0 +1,66 @@
+@page {
+  size: A4;
+  margin: 0.5cm 1cm;
+  @top-center {
+    content: element(header);
+  }
+}
+/* Estilos CSS para el encabezado */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  width: 100%;
+}
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.cabecera img {
+  height: 130px;
+}
+
+.cabecera-rigth{
+  display: flex;
+  width: auto;
+  height: 110px;
+  flex-direction: column;
+  align-items: center;
+}
+.cabecera-rigth h1{
+  width: 700px;
+  text-align: center;
+  font-size: 26px;
+  margin: 0;
+  background: white;
+}
+
+.cabecera-rigth-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 550px;
+  height: 90px;
+}
+
+.cabecera-rigth-content p{
+  margin: 0;
+  padding: 0;
+  width: 400px;
+}
+
+
+
+main {
+  display: grid;
+  margin-top: 150px;
+}
+
+.page-break {
+  page-break-before: always;
+  margin-top: 150px; /* Agregamos el margen superior */
+}

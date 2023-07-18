@@ -1,0 +1,67 @@
+{% extends 'report/base.html' %}
+
+{%block title %}Paquetes{%endblock%}
+{%block doc %}<p>Reporte <br/>Paquete</p>{%endblock%}
+{% load static %}
+{% block css_file %}
+    <link rel="stylesheet" type="text/css" href="{{ url }}{% static 'report/paquetes/paquetes.css' %}">
+{% endblock %}
+
+{% block content %}
+<table class="tabla">
+    <thead>
+      <tr>
+        <th>Guia</th>
+        <th>Estado</th>
+        <th>Remitente</th>
+        <th>Repartidor</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Costo</th>
+        <th>Fecha envío</th>
+        <th>Hora envío</th>
+        <th>Fecha recepción</th>
+        <th>Hora recepción</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for pack in paquete%}
+            <tr>
+                <td>{{ pack.paq_numero }}</td>
+                <td>{{ pack.paq_estado }}</td>
+                <td>{{ pack.user.get_full_name }}</td>
+                <td>{{pack.repartidor.usuario.get_full_name}}</td>
+                <td>{{pack.paq_direccion}}</td>
+                <td>{{pack.paq_telefono}}</td>
+                <td>${{pack.paq_precio}}</td>
+                <td>{{pack.paq_fechaCreacion|date:"d/m/Y"}}</td>
+                <td>{{pack.paq_horaCreacion}}</td>
+                <td>{{pack.paq_fechaConfirmacion|date:"d/m/Y"}}</td>
+                <td>{{pack.paq_horaConfirmacion|date:"H:i"}}</td>
+            </tr>
+            {% if forloop.counter0 > 0 and forloop.counter0|divisibleby:16 %}
+                </tbody>
+                </table>
+                <div class="page-break"></div>
+                <table class="tabla">
+                <thead>
+                    <tr>
+                      <th>Guia </th>
+                      <th>Estado</th>
+                      <th>Remitente</th>
+                      <th>Repartidor</th>
+                      <th>Dirección</th>
+                      <th>Teléfono</th>
+                      <th>Costo</th>
+                      <th>Fecha de envío</th>
+                      <th>Hora de envío</th>
+                      <th>Fecha de recepción</th>
+                      <th>Hora de recepción</th>
+                    </tr>
+                  </thead>
+                </tbody>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}

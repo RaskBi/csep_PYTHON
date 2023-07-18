@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{%block title %} {% endblock %}</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url }}{% static 'report/base/base.css' %}"
+    />
+    {% block css_file %}{% endblock %}
+  </head>
+  <body>
+    <header>
+      <div class="cabecera">
+        <img src="{{ image }}" />
+        <div class="cabecera-rigth">
+          <h1>{{ nombre_empresa }}</h1>
+          <div class="cabecera-rigth-content">
+            <p>
+            <strong>Fecha de creación de reporte: </strong>{{ fechaCreacion|date:"d/m/Y H:i"}}
+            </p>
+            {% if fechaInicio %}
+            <p>
+              <strong>Desde</strong> {{ fechaInicio|date:"d/m/Y" }} <strong>hasta</strong> {{fechaFin|date:"d/m/Y" }}
+            </p>
+            {% endif %}
+            {% if fechaCreacion %}
+            <p><strong>Creado por: </strong> {{user.get_full_name}}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>{% block content %}{% endblock %}</main>
+  </body>
+</html>

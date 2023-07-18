@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from report import views as report
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,8 +23,12 @@ urlpatterns = [
     path('paquete/', include('paquete.api.urls')),
     path('ubicacion/', include('ubicacion.api.urls')),
     path('report/', include('report.api.urls')),
+    path('report2/paquetes',report.reports),
 ]
 
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+#static
+urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
