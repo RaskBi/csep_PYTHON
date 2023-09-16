@@ -4,6 +4,25 @@ from drf_extra_fields.fields import Base64ImageField
 from django.utils import timezone
 from utils.random import randomnum, cbxModel, cbxtovalue, cbxModelObject
 from datetime import datetime
+from CSEPcon.settings import os,DIR,MEDIA_URL,MEDIA_ROOT
+from barcode.writer import ImageWriter
+import barcode
+from io import BytesIO
+
+file_folder = f'{MEDIA_ROOT}barCode'
+
+def barcode_Code39(text):
+    EAN = barcode.get_barcode_class('Code39')
+    my_ean = EAN(text, writer=ImageWriter(),add_checksum=False)
+    fullname = f'{text}.png'
+    fp = BytesIO()
+    my_ean.write(fp)
+    folder_barcode=f'{file_folder}/'
+    if not os.path.exists(folder_barcode):
+        os.makedirs(folder_barcode)
+    with open(f"{folder_barcode}{fullname}", "wb") as f:
+        my_ean.write(f)
+    return f"barCode/{fullname}"
 
 class ComboBoxSerializers(serializers.Serializer):
     value= serializers.IntegerField()
@@ -26,6 +45,7 @@ class paqueteSerializableSpecial(serializers.ModelSerializer):
     user=serializers.CharField(read_only=True)
     repartidor=serializers.CharField(read_only=True)
     paq_tip=serializers.CharField(read_only=True)
+    paq_barCode=serializers.CharField(read_only=True)
     class Meta:
         model = models.paquete
         fields = "__all__"
@@ -59,6 +79,7 @@ class paqueteSerializableSpecial(serializers.ModelSerializer):
         validated_data["repartidor_id"]= cbxtovalue(validated_data.pop("repartidor_add"))
         validated_data["user_id"]=  cbxtovalue(validated_data.pop("user_add"))
         validated_data["paq_tip_id"]=  cbxtovalue(validated_data.pop("paq_tip_add"))
+        validated_data["paq_barCode"]= barcode_Code39(validated_data.get("paq_numero"))
         instance= models.paquete(**validated_data)
         instance.save()
         return instance
