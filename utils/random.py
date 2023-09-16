@@ -9,6 +9,10 @@ def randomnum(length):
     # print("Random string of length", length, "is:", result_str)
     return result_str
 
+def randomstr(length):
+    random_string = ''.join(random.choices(string.ascii_lowercase, k=length))
+    return random_string
+
 def cbxModel(model, value= False, name= None):
     list = []
     for data in model:

@@ -3,7 +3,7 @@ from paquete.api import controlador
 from rest_framework.authtoken import views as token
 
 urlpatterns= [
-    path("get/paquete", controlador.getpaquete.as_view()),
+    path("get/paquete/<paq_status>", controlador.getpaquete.as_view()),
     path("post/paquete", controlador.postpaquete.as_view()),
     path("codigo/get/<codigo>", controlador.getpaqueteCodigo.as_view()),
     path("put/estado/<id>", controlador.putpaqueteEstado.as_view()),

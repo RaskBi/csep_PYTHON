@@ -8,9 +8,9 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 class getpaquete(APIView):
-    def get(self,request):
+    def get(self,request,paq_status):
         try:
-            paquete = serializable.models.paquete.objects.all().order_by('-id')
+            paquete = serializable.models.paquete.objects.filter(paq_active= paq_status).order_by('-id')
             serializer = serializable.paqueteSerializable(paquete,many = True, context= {'request': request})
             return Response(serializer.data, status = status.HTTP_200_OK)
         except Exception as e:
@@ -94,6 +94,21 @@ class putpaquete(APIView):
                 serial2=serializable.paqueteSerializable(g)
                 return Response(serial2.data, status= status.HTTP_200_OK)
             return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"error":str(e)}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    def delete(self,request,id):
+        try:
+            paquete= serializable.models.paquete.objects.get(pk= id)
+            msg= ""
+            if paquete.paq_active==1:
+                paquete.paq_active=2
+                msg= "Archivado correctamente"
+            else:
+                paquete.paq_active=1
+                msg= "Desarchivado correctamente"
+            paquete.save()
+            return Response({"msg":msg,"status":True}, status= status.HTTP_200_OK)
         except Exception as e:
             return Response({"error":str(e)}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
 

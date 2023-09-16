@@ -325,7 +325,11 @@ class chartEntregadosNoEntregados(APIView):
                     print(serial.validated_data.get("usuario").get("value"))
                     entregados=entregados.filter(user_id = serial.validated_data.get("usuario").get("value"))
                     noEntregados=noEntregados.filter(user_id = serial.validated_data.get("usuario").get("value"))
-                return Response([entregados.count(), noEntregados.count()], status=status.HTTP_200_OK)
+                total=entregados.count()+noEntregados.count()
+                print(total)
+                entregadoPorcentaje=entregados.count()*100/total
+                noEntregadoPorcentaje=noEntregados.count()*100/total
+                return Response([entregados.count() , noEntregados.count()], status=status.HTTP_200_OK)
             return Response(serial.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             print(e)

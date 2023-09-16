@@ -33,6 +33,8 @@ class paquete(models.Model):
     paq_peso= models.FloatField()
     paq_tip= models.ForeignKey(tipoPaquete, on_delete= models.RESTRICT,null= True)
     paq_precio= models.FloatField()
+    paq_barCode= models.ImageField(upload_to= "barCode/", null= True, blank= True)
+    paq_active= models.IntegerField(default=1)
     class meta:
         verbose_name= "paquete"
         verbose_name_plural= "paquetes"
