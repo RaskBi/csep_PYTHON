@@ -218,7 +218,7 @@ class CbxUser(APIView):
     def get(self, request):
         try:
             list_cbx=[]
-            for i in serializable.models.extencion.objects.filter(rol= 'U'):
+            for i in serializable.models.extencion.objects.filter(rol= 'U', usuario__is_active= True):
                 users= serializable.models.User.objects.get(id=i.usuario_id)
                 data={
                     "value":users.pk,
@@ -232,7 +232,7 @@ class CbxUser(APIView):
 class CbxRepartidor(APIView):
     def get(self, request):
         try:
-            ext = serializable.models.extencion.objects.filter(rol= 'R')
+            ext = serializable.models.extencion.objects.filter(rol= 'R', usuario__is_active= True)
             cbx= serializable.cbxModel(ext)
             return Response(cbx,status=status.HTTP_200_OK)
         except Exception as e:
